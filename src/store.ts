@@ -25,7 +25,7 @@ export class Store implements NewsStore {
     return this._currentPage > 1 ? this._currentPage - 1 : 1;
   }
   
-  get numberOfFeed(): number {
+  get numberOfFeed() {
     return this.feeds.length;
   }
 
