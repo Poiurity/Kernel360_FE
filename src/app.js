@@ -1,17 +1,24 @@
-import { useState } from 'react';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { addSection } from "./actions";
+import { connect } from "react-redux";
 import { Header, Clock, Text, Box, Button, TextInput, Select } from "grommet";
-import styled from 'styled-components';
-import { Add } from 'grommet-icons';
-import SectionList from './components/SectionList';
+import { Add } from "grommet-icons";
+import SectionList from "./SectionList";
+
+const Footer = styled(Box)`
+  padding: 20px;
+  color: #aaa;
+`;
 
 const DefaultEst = 5;
 
-function App({ data, addSection, startDiscuss, stopDiscuss, removeSection }) {
-  const [title, updateTitle] = useState('');
-  const [est, updateEst] = useState(DefaultEst);
+function App({ addSection }) {
+  let [title, updateTitle] = useState("");
+  let [est, updateEst] = useState(DefaultEst);
 
   const clearControls = () => {
-    updateTitle('');
+    updateTitle("");
     updateEst(DefaultEst);
   };
   const onChangeTitle = event => {
@@ -52,11 +59,7 @@ function App({ data, addSection, startDiscuss, stopDiscuss, removeSection }) {
             />
           </Box>
         </Header>
-        <SectionList 
-          sectionList={data.sectionList} 
-          startDiscuss={startDiscuss}
-          stopDiscuss={stopDiscuss}
-          removeSection={removeSection} />
+        <SectionList />
       </Box>
       <Footer>
         <Text size="xxsmall">
@@ -67,9 +70,9 @@ function App({ data, addSection, startDiscuss, stopDiscuss, removeSection }) {
   );
 }
 
-const Footer = styled(Box)`
-  padding: 20px;
-  color: #aaa;
-`;
-
-export default App;
+export default connect(
+  () => {},
+  dispatch => ({
+    addSection: (title, est) => dispatch(addSection(title, est))
+  })
+)(App);

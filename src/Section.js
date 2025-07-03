@@ -1,9 +1,10 @@
 import React from "react";
 import { Stack, Text, Button, Meter } from "grommet";
-import { timeFormatter } from "../utils";
-import { Trash } from 'grommet-icons';
+import { timeFormatter } from "./utils";
+import { connect } from "react-redux";
+import { removeSection, startDiscuss, stopDiscuss } from "./actions";
 
-export default function Section({
+function Section({
   id,
   est,
   act,
@@ -70,12 +71,22 @@ export default function Section({
           label="Discuss"
         />
         <Button
+          plain
           size="small"
-          icon={<Trash size="small"  color="gray" />}
           style={{ marginLeft: 14 }}
+          label="···"
           onClick={() => removeSection(id)}
         />
       </td>
     </tr>
   );
 }
+
+export default connect(
+  () => ({}),
+  dispatch => ({
+    removeSection: id => dispatch(removeSection(id)),
+    startDiscuss: id => dispatch(startDiscuss(id)),
+    stopDiscuss: id => dispatch(stopDiscuss(id))
+  })
+)(Section);

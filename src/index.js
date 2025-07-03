@@ -1,21 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import AppData from './appData';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { createStore, applyMiddleware } from "redux";
+import createSagaMiddleware from "redux-saga";
+import { Provider } from "react-redux";
+import Sagas from "./sagas";
+import reducer from "./reducer";
 
-setInterval(() => {
-  AppData.store.sectionList
-    .forEach(section => (section.isDiscuss) && section.act++);
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 
-  ReactDOM.render(
-    <React.StrictMode>
-      <App 
-        data={ AppData.store } 
-        addSection={AppData.addSection} 
-        startDiscuss={AppData.startDiscuss}
-        stopDiscuss={AppData.stopDiscuss}
-        removeSection={AppData.removeSection} />
-    </React.StrictMode>,
-    document.getElementById('root')
-  );  
-}, 1000);
+sagaMiddleware.run(Sagas);
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById("root")
+);

@@ -1,10 +1,11 @@
 import React from "react";
 import { Table } from "./Table";
 import Section from "./Section";
-import { timeFormatter } from "../utils";
+import { connect } from "react-redux";
+import { timeFormatter } from "./utils";
 import { Text } from "grommet";
 
-export default function SectionList({ sectionList, startDiscuss, stopDiscuss, removeSection }) {
+function SectionList({ sectionList }) {
   const allTime = (key, adjust = 1) =>
     timeFormatter(
       sectionList.map(section => section[key]).reduce((a, b) => a + b, 0) *
@@ -33,10 +34,7 @@ export default function SectionList({ sectionList, startDiscuss, stopDiscuss, re
         </thead>
         <tbody>
           {sectionList.map((section, seq) => (
-            <Section {...section} key={seq}
-              startDiscuss={startDiscuss}
-              stopDiscuss={stopDiscuss}
-              removeSection={removeSection} />
+            <Section {...section} key={seq} />
           ))}
         </tbody>
         <thead>
@@ -54,3 +52,7 @@ export default function SectionList({ sectionList, startDiscuss, stopDiscuss, re
     </>
   );
 }
+
+export default connect(state => ({
+  sectionList: state.sectionList
+}))(SectionList);
