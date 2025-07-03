@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>4.3 로거 미들웨어</title>
+	<title>4.4 미동기 처리기 미들웨어</title>
 	<style>
 		main {
 			padding: 3em;
@@ -12,6 +12,10 @@
 		#counter { 
 			font-size: 124px;
 			font-weight: bolder;
+		}
+
+		#loading {
+			visibility: hidden;
 		}
 
 		button {
@@ -23,10 +27,11 @@
 <body>
 	<main>
 		<header>
-			<h1>4.3 로거 미들웨어</h1>
+			<h1>4.3 미동기 처리기 미들웨어</h1>
 		</header>
 		<section>
 			<p id="counter"></p>
+			<p id="loading">요청중...</p>
 			<div>
 				<button id="btn-increase">증가</button>
 				<button id="btn-async-increase">비동기 증가</button>
